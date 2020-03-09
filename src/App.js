@@ -1,8 +1,20 @@
 import React from 'react';
+import { 
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+import All from './components/All';
 
 function App() {
   return (
-    <>Hello world</>
+    <Router>
+      <Switch>
+        <Route path="/">
+          <All />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
