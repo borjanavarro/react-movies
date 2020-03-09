@@ -4,14 +4,14 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import All from './components/All';
+import MovieList from './components/MovieList';
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/">
-          <All />
+          <MovieList />
         </Route>
       </Switch>
     </Router>
