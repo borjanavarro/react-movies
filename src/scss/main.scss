@@ -1,0 +1,16 @@
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+
+@import './global.scss';
+@import '../components/Filters/styles.scss';
+@import '../components/Footer/styles.scss';
+@import '../components/Header/styles.scss';
+@import '../components/Layout/styles.scss';
+// @import '../components/MovieList/styles.scss';
+@import '../components/MovieItem/styles.scss';
