@@ -1,0 +1,14 @@
+.filters {
+  position: absolute;
+  width: 100%;
+  transition: top .2s;
+  height: 500px;
+  background-color: $soft-gray;
+  padding: 10px 20px;
+
+  input {
+    border: 1px solid $blue;
+    padding: 10px;
+    width: 100%;
+  }
+}
