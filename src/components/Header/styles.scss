@@ -1,6 +1,13 @@
-@import '../../scss/variables.scss';
-
 header {
-  height: 100px;
   background-color: $blue;
+  padding: 20px 0;
+  background-color: $soft-gray;
+
+  .img-container {
+    height: 50px;
+
+    img {
+      height: 100%
+    }
+  }
 }
