@@ -1,0 +1,37 @@
+.pagination {
+  margin-top: 40px;
+
+  ul {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 0;
+      width: 400px;
+
+      li {
+          list-style-type: none;
+          padding: 10px 20px;
+          display: flex;
+          // line-height: 0.7;
+
+          p {
+            margin: 0;
+          }
+
+          button {
+              border: 0;
+              cursor: pointer;
+              background-color: transparent;
+
+              &:disabled {
+                  color: lightgray;
+                  cursor: not-allowed;
+              }
+          }
+
+          &.active {
+              background-color: $soft-gray;
+          }
+      }
+  }
+}
