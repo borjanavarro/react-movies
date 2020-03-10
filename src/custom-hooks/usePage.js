@@ -15,7 +15,7 @@ function usePage() {
     setPage(queryParam);
   }, [queryParam]);
 
-  return [page, setPage];
+  return [page];
 }
 
 export default usePage;

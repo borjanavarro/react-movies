@@ -9,19 +9,20 @@ import usePage from '../../custom-hooks/usePage';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = usePage();
-  const [hasNext, setHasNext] = useState(false);
+  const [page] = usePage();
+  const [totalPages, setTotalPages] = useState();
+
   const search = 'a';
 
   const getMovies = useCallback( async () => {
     const movies = await moviesApi_getAll(search, page);
     setMovies(movies.results);
-    setHasNext(page !== movies.total_pages);
+    setTotalPages(movies.total_pages);
   }, [search, page]);
 
   useEffect( () => {
     getMovies();
-  }, [getMovies, page]);
+  }, [getMovies]);
 
   if ( !movies || movies.length === 0 ) {
     return (
@@ -44,7 +45,7 @@ function MovieList() {
       </Row>
       <Row>
         <Col>
-          <Pagination page={page} setPage={setPage} hasNext={hasNext}/>
+          <Pagination page={page} totalPages={totalPages} />
         </Col>
       </Row>
     </Layout>

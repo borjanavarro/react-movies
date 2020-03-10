@@ -1,16 +1,29 @@
-import React from 'react';
-import { useHistory } from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import { useHistory, useLocation } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Pagination = (props) => {
-    const { page, setPage, hasNext } = props;
-    const hasPrevious = page !== 1;
+    const { page, totalPages } = props;
+    const [hasPrevious, setHasPrevious] = useState(false);
+    const [hasNext, setHasNext] = useState(false);
     let history = useHistory();
-    const url = '/?';
+    const location = useLocation();
+    const params = useQuery();
 
     const handleClick = (nextPage) => {
-      setPage(nextPage);
-      history.push(url + 'page=' + nextPage);
+      setHasPrevious(false);
+      setHasNext(false);
+      params.set('page', nextPage);
+      history.push(location.pathname + '?' + params.toString());
     }
+
+    useEffect( () => {
+      setHasNext(page !== totalPages);
+      setHasPrevious(page !== 1);
+    }, [page, totalPages])
 
     return (
         <div className="pagination">
