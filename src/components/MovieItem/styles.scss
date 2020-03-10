@@ -1,15 +1,8 @@
 .movie-item {
   margin-bottom: 20px;
 
-  .img-container {
-    img {
-      width: 100%;
-    }
-  }
-
   .flip-card {
     background-color: transparent;
-    // width: 300px;
     height: 240px;
     perspective: 1000px;
   }
@@ -21,7 +14,6 @@
     text-align: center;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    // box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   }
   
   .flip-card:hover .flip-card-inner {
@@ -34,11 +26,15 @@
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 3px;
   }
   
   .flip-card-front {
-    // background-color: #bbb;
-    // color: black;
+    background-color: $soft-gray;
+    img {
+      width: 100%;
+    }
   }
   
   .flip-card-back {

@@ -5,4 +5,9 @@ $soft-gray: rgb(241, 241, 241);
 * {
   color: $dark-blue;
   // font-family: 'Inconsolata', monospace;
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
 }
