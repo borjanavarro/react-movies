@@ -10,14 +10,20 @@ function Layout({children}) {
     <>
     <Header />
       <Container>
-        <Row>
-          <Col lg={3} >
-            <Filters />
-          </Col>
-          <Col lg={9}>
-            {children}
-          </Col>
-        </Row>
+        <div className="page-container">
+          <Row>
+            <Col lg={4} >
+              <aside>
+                <Filters />
+              </aside>
+            </Col>
+            <Col lg={8}>
+              <main>
+                {children}
+              </main>
+            </Col>
+          </Row>
+        </div>
       </Container>
     <Footer />
   </>
