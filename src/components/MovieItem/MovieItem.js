@@ -1,8 +1,6 @@
 import React from 'react';
 import { Col } from 'react-bootstrap';
 
-import './styles.scss';
-
 const POSTER_URL = 'https://image.tmdb.org/t/p/original/';
 
 function MovieItem({ movie }) {
