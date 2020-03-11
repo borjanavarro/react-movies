@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import {moviesApi_getAll} from '../../services/moviesApi';
 import Layout from '../Layout';
-import Movie from '../MovieItem';
+import MovieItem from '../MovieItem';
 import Pagination from '../Pagination';
 import usePage from '../../custom-hooks/usePage';
+import FiltersContext from '../../contexts/Filters';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [page] = usePage();
   const [totalPages, setTotalPages] = useState();
-
-  const search = 'a';
+  const {search} = useContext(FiltersContext);
 
   const getMovies = useCallback( async () => {
     const movies = await moviesApi_getAll(search, page);
@@ -21,8 +21,12 @@ function MovieList() {
   }, [search, page]);
 
   useEffect( () => {
-    getMovies();
-  }, [getMovies]);
+    if ( search ) {
+      getMovies();
+    } else {
+      setMovies([]);
+    }
+  }, [getMovies, page, search]);
 
   if ( !movies || movies.length === 0 ) {
     return (
@@ -40,7 +44,7 @@ function MovieList() {
     <Layout>
       <Row>
         {movies.map( (movie) => {
-          return <Movie key={movie.id} movie={movie} />
+          return <MovieItem key={movie.id} movie={movie} />
         })}
       </Row>
       <Row>

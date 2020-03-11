@@ -1,6 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
+
+import FiltersContext from '../../contexts/Filters';
 
 function Filters() {
+  const {setSearch} = useContext(FiltersContext);
   const [styles, setStyles] = useState({top: 0});
 
   const handleScroll = useCallback( () => {
@@ -22,15 +25,15 @@ function Filters() {
     }
   }, [])
 
-  const handleChange = () => {
-    // console.log('entra');
-  }
-
   useEffect( () => {
     window.addEventListener('scroll', handleScroll, true);
 
     return window.removeEventListener('scroll', handleScroll);
   }, [handleScroll])
+
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  }
 
   return (
     <div className="filters" style={styles}>

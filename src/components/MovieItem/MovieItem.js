@@ -25,7 +25,7 @@ function MovieItem({ movie }) {
         <div className="flip-card">
           <div className="flip-card-inner">
             <div className="flip-card-front">
-                <img src={ movie.poster_path ? POSTER_URL + poster_path : 'error' } alt=""/>
+                <img src={ movie.poster_path ? POSTER_URL + poster_path : 'error' } alt="" />
             </div>
             <div className="flip-card-back">
               <h5 className="title">{movie.title}<br/>({movie.release_date.substr(0, 4)})</h5> 
