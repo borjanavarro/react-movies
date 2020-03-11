@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import FiltersContext from '../../contexts/Filters';
 
 function Filters() {
-  const {setSearch} = useContext(FiltersContext);
+  const {filters, filtersDispatch} = useContext(FiltersContext);
   const [styles, setStyles] = useState({top: 0});
+  const history = useHistory();
 
   const handleScroll = useCallback( () => {
     const footer = document.querySelector('footer');
@@ -32,16 +34,27 @@ function Filters() {
   }, [handleScroll])
 
   const handleChange = (event) => {
-    setSearch(event.target.value);
+    const value = event.target.value;
+    const allowedChars = new RegExp(/^[a-z0-9| ]*$/i);
+
+    if ( allowedChars.test(value) ) {
+      history.push('/?q=' + encodeURI(value));
+      filtersDispatch({search: value, type: 'CHANGE_SEARCH'});
+    }
+    // podria poner algun tipo de validación
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
   }
 
   return (
-    <div className="filters" style={styles}>
+    <aside className="filters" style={styles}>
       <h3>Filters</h3>
-      <form action="" onChange={handleChange}>
-        <input type="text" placeholder="Search" />
+      <form action="" onSubmit={handleSubmit}>
+        <input type="text" placeholder="Search" value={filters.search} onChange={handleChange} />
       </form>
-    </div>
+    </aside>
   );
 }
 

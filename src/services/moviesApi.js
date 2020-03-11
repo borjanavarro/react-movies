@@ -15,6 +15,7 @@ const moviesApi = (() => {
           resolve(response.data);
         } catch (err) {
           reject('Error fetching');
+          resolve([]);
         }
       })
     }

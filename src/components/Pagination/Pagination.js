@@ -1,29 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import React, { useContext } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
+
+import FiltersContext from '../../contexts/Filters';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Pagination = (props) => {
-    const { page, totalPages } = props;
-    const [hasPrevious, setHasPrevious] = useState(false);
-    const [hasNext, setHasNext] = useState(false);
-    let history = useHistory();
+const Pagination = () => {
+    const { filters } = useContext(FiltersContext);
+    const history = useHistory();
     const location = useLocation();
     const params = useQuery();
+    const page = parseInt(filters.pages.current);
 
     const handleClick = (nextPage) => {
-      setHasPrevious(false);
-      setHasNext(false);
       params.set('page', nextPage);
       history.push(location.pathname + '?' + params.toString());
     }
-
-    useEffect( () => {
-      setHasNext(page !== totalPages);
-      setHasPrevious(page !== 1);
-    }, [page, totalPages])
 
     return (
         <div className="pagination">
@@ -31,14 +25,14 @@ const Pagination = (props) => {
                 <li>
                     <button
                         onClick={() => { handleClick(page - 1) }}
-                        disabled={!hasPrevious}>Previous
+                        disabled={page <= 1}>Previous
                     </button>
                 </li>
                 <li className="active"><p>{page}</p></li>
                 <li>
                     <button
                         onClick={() => { handleClick(page + 1) }}
-                        disabled={!hasNext}>Next
+                        disabled={page >= parseInt(filters.pages.total)}>Next
                     </button>
                 </li>
             </ul>

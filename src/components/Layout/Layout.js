@@ -13,14 +13,10 @@ function Layout({children}) {
       <div className="page-container">
         <Row>
           <Col lg={4} >
-            <aside>
               <Filters />
-            </aside>
           </Col>
           <Col lg={8}>
-            <main>
-              {children}
-            </main>
+            {children}
           </Col>
         </Row>
       </div>
