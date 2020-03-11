@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import {moviesApi_getAll} from '../../services/moviesApi';
+import moviesApi from '../../services/moviesApi';
 import Layout from '../Layout';
 import MovieItem from '../MovieItem';
 import Pagination from '../Pagination';
@@ -15,7 +15,7 @@ function MovieList() {
   const {search} = useContext(FiltersContext);
 
   const getMovies = useCallback( async () => {
-    const movies = await moviesApi_getAll(search, page);
+    const movies = await moviesApi.getBySearch(search, page);
     setMovies(movies.results);
     setTotalPages(movies.total_pages);
   }, [search, page]);
