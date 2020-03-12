@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import moviesApi from '../../services/moviesApi';
@@ -53,16 +52,10 @@ function MovieList() {
   if ( loading ) {
     return (
       <Layout>
-        <Row>
           <div className="no-results">
             <h2>Loading...</h2>
           </div>
-        </Row>
-        <Row>
-          <Col>
-            <Pagination />
-          </Col>
-        </Row>
+          <Pagination />
       </Layout>
     )
   }
@@ -70,11 +63,9 @@ function MovieList() {
   if ( !movies || movies.length === 0 ) {
     return (
       <Layout>
-        <Row>
-          <div className="no-results">
-            <h2>No results</h2>
-          </div>
-        </Row>
+        <div className="no-results">
+          <h2>No results</h2>
+        </div>
       </Layout>
     )
   }
@@ -82,17 +73,11 @@ function MovieList() {
   return (
     <Layout>
       <main className="movie-list">
-        <Row>
-            {movies.map( (movie) => {
-              return <MovieItem key={movie.id} movie={movie} />
-            })}
-        </Row>
+          {movies.map( (movie) => {
+            return <MovieItem key={movie.id} movie={movie} />
+          })}
       </main>
-      <Row>
-        <Col>
-          <Pagination />
-        </Col>
-      </Row>
+      <Pagination />
     </Layout>
   );
 }
