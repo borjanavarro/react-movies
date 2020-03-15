@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import moviesApi from '../../services/moviesApi';
 import Layout from '../Layout';
-import MovieItem from '../MovieItem';
+import MovieListItem from '../MovieListItem';
 import Pagination from '../Pagination';
 import FiltersContext from '../../contexts/Filters';
 
@@ -74,7 +74,7 @@ function MovieList() {
     <Layout>
       <main className="movie-list">
           {movies.map( (movie) => {
-            return <MovieItem key={movie.id} movie={movie} />
+            return <MovieListItem key={movie.id} movie={movie} />
           })}
       </main>
       <Pagination />
