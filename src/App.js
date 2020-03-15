@@ -5,8 +5,9 @@ import {
   Route
 } from 'react-router-dom';
 
-import MovieList from './components/MovieList';
 import FiltersContext from './contexts/Filters';
+import MovieList from './components/MovieList';
+import MovieDetail from './components/MovieDetail';
 
 function reducer(state, action) {
   switch(action.type) {
@@ -51,11 +52,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
-          <FiltersContext.Provider value={{filters, filtersDispatch}}>
-            <MovieList />
-          </FiltersContext.Provider>
-        </Route>
+        <FiltersContext.Provider value={{filters, filtersDispatch}}>
+          <Route exact path="/">
+              <MovieList />
+          </Route>
+          <Route path="/detail/:movieId">
+              <MovieDetail />
+          </Route>
+        </FiltersContext.Provider>
       </Switch>
     </Router>
   );
