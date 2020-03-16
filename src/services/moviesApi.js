@@ -60,6 +60,20 @@ const moviesApi = (() => {
           resolve([]);
         }
       })
+    },
+
+    getAllGenres: function () {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'genre/movie/list?api_key=' + API_KEY
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          reject('Error fetching');
+          resolve(null);
+        }
+      })
     }
   }
 })();

@@ -18,7 +18,7 @@ function MovieList() {
   const queryPage = useQuery().get('page');
   const querySearch = useQuery().get('q');
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getMovies = useCallback( async () => {
     setLoading(true);

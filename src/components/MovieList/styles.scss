@@ -2,18 +2,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: 1400px;
   
   @include media-breakpoint-up(md) {
     justify-content: space-between;
-  }
-}
-
-.no-results {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-
-  h2 {
-    padding-top: 40px;
   }
 }
