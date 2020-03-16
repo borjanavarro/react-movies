@@ -1,0 +1,102 @@
+@function getMovieItemWidth($height) {
+  @return 500 / 750 * $height;
+}
+
+.movie-item {
+  margin-bottom: 20px;
+
+  .flip-card {
+    background-color: transparent;
+    height: 600px;
+    width: getMovieItemWidth(600px);
+    perspective: 1000px;
+
+    @include media-breakpoint-up(md) {
+      height: 250px;
+      width: getMovieItemWidth(250px);  
+    }
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+  
+  .flip-card-front {
+    background-color: $soft-gray;
+    img {
+      max-height: 100%;
+    }
+  }
+  
+  .flip-card-back {
+    background-color: $blue;
+    color: white;
+    transform: rotateY(180deg);
+    padding: 80px 20px;
+
+    @include media-breakpoint-up(md) {
+      padding: 30px 10px;
+    }
+
+    * {
+      color: white;
+    }
+
+    .title {
+      height: 260px;
+      overflow: hidden;
+      font-size: 32px;
+    }
+
+    .rating {
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .fa-star {
+        font-size: 36px;
+        color: rgb(255, 237, 0);
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      .title {
+        height: 120px;
+        overflow: hidden;
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      .rating {
+        font-size: 16px;
+
+        .fa-star {
+          font-size: 20px;
+          margin-right: 4px;
+          padding-bottom: 2px;
+        }
+      }
+    }
+  }
+}
+    

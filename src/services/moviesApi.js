@@ -18,6 +18,62 @@ const moviesApi = (() => {
           resolve([]);
         }
       })
+    },
+
+    findDetailsByMovieId: function(movieId) {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'movie/' + movieId + '?api_key=' + API_KEY;
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    findReviewsByMovieId: function(movieId) {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'movie/' + movieId + '/reviews?api_key=' + API_KEY;
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    findCreditsByMovieId: function(movieId) {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'movie/' + movieId + '/credits?api_key=' + API_KEY;
+
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    getAllGenres: function () {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'genre/movie/list?api_key=' + API_KEY
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          reject('Error fetching');
+          resolve(null);
+        }
+      })
     }
   }
 })();
