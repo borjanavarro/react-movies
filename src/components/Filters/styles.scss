@@ -8,7 +8,7 @@ $genre-hover-color: rgba($blue, 0.3);
   border: 1px solid $border-color;
 
   form > * {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
 
   input[type="text"] {
@@ -17,48 +17,54 @@ $genre-hover-color: rgba($blue, 0.3);
     width: 100%;
   }
 
-  .genre-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    .genre {
-      padding: 5px 10px;
-      border: 1px solid $border-color;
-      font-size: 13px;
-      margin-bottom: 5px;
-      
-      &:hover {
-        background-color: $genre-hover-color;
-        border: 1px solid $genre-hover-color;
-        color: white;
-      }
-
-      &.selected {
-        background-color: $dark-blue;
-        border: 1px solid $dark-blue;
-        color: white;
-
-        // &:hover {
-        //   background-color: $genre-hover-color;
-        //   border: 1px solid $genre-hover-color;
-        // }
+  .genre-wrapper {
+    .genre-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: -3px;
+  
+      .genre {
+        padding: 5px 10px;
+        border: 1px solid $border-color;
+        font-size: 13px;
+        margin: 3px;
+        
+        &:hover {
+          background-color: $genre-hover-color;
+          border: 1px solid $genre-hover-color;
+          color: white;
+        }
+  
+        &.selected {
+          background-color: $dark-blue;
+          border: 1px solid $dark-blue;
+          color: white;
+  
+          // &:hover {
+          //   background-color: $genre-hover-color;
+          //   border: 1px solid $genre-hover-color;
+          // }
+        }
       }
     }
   }
+  
 
   .years-slider {
+    margin-top: 5px;
+    
     label {
       margin-bottom: 20px;
-    }
 
-    label .min-year,
-    label .max-year {
-      border: 1px solid $border-color;
-      padding: 5px 0;
-      width: 50px;
-      display: inline-block;
-      text-align: center;
+      .min-year,
+      .max-year {
+        border: 1px solid $border-color;
+        padding: 5px 0;
+        width: 50px;
+        display: inline-block;
+        text-align: center;
+      }
     }
   }
 }

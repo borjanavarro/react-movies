@@ -8,7 +8,6 @@ import YearsSlider from '../YearsSlider';
 function Filters() {
   const {filters, filtersDispatch} = useContext(FiltersContext);
   const [styles, setStyles] = useState({top: 0});
-  const [labelStyles, setLabelStyles] = useState({left: 0});
   const [genres, setGenres] = useState([]);
   const history = useHistory();
   const [maxYear, setMaxYear] = useState();
@@ -73,11 +72,6 @@ function Filters() {
     <aside className="filters" style={styles}>
       {/* <h3>Filters</h3> */}
       <form action="" onSubmit={handleSubmit}>
-        <div className="genre-cloud">
-          {genres.map( (genre, i) => {
-            return <button key={genre.id} className="genre" data-id={genre.id} onClick={genreClick}>{genre.name}</button>
-          })}
-        </div>
         <input type="text" placeholder="Movie ..." value={filters.search} onChange={handleChange} />
         <input type="text" placeholder="Casting ..." />
         <div className="years-slider">
@@ -88,6 +82,13 @@ function Filters() {
             <span className="max-year">{maxYear}</span>
           </label>
           <YearsSlider setMinYear={setMinYear} setMaxYear={setMaxYear} />
+        </div>
+        <div className="genre-wrapper">
+          <div className="genre-cloud">
+            {genres.map( (genre, i) => {
+              return <button key={genre.id} className="genre" data-id={genre.id} onClick={genreClick}>{genre.name}</button>
+            })}
+          </div>
         </div>
       </form>
     </aside>

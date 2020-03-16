@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider'
-import { SliderRail, KeyboardHandle, Track, Tick } from './components' // example render components - source below
+import { Slider, Rail, Handles, Tracks } from 'react-compound-slider'
+import { SliderRail, KeyboardHandle, Track } from './components' // example render components - source below
 
 const sliderStyle = {
   position: 'relative',
@@ -34,13 +34,12 @@ class YearsSlider extends Component {
   }
 
   render() {
-    console.log(this.props);
     const {
-      state: { values, update },
+      state: { values/*, update */ },
     } = this
 
     return (
-      <div style={{ height: 120, width: '100%' }}>
+      <div style={{ height: 20, width: '100%' }}>
         {/* <ValueViewer values={values} update={update} /> */}
         <Slider
           mode={3}

@@ -17,11 +17,11 @@ const railOuterStyle = {
 const railInnerStyle = {
   position: 'absolute',
   width: '100%',
-  height: 14,
+  height: 10,
   transform: 'translate(0%, -50%)',
   borderRadius: 7,
   pointerEvents: 'none',
-  backgroundColor: 'rgb(155,155,155)',
+  backgroundColor: 'rgb(222, 222, 222)',
 }
 
 export function SliderRail({ getRailProps }) {
@@ -73,8 +73,8 @@ export function Handle({
           position: 'absolute',
           transform: 'translate(-50%, -50%)',
           zIndex: 2,
-          width: 24,
-          height: 24,
+          width: 18,
+          height: 18,
           borderRadius: '50%',
           boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
           backgroundColor: disabled ? '#666' : '#374d5b',
@@ -120,8 +120,8 @@ export function KeyboardHandle({
         position: 'absolute',
         transform: 'translate(-50%, -50%)',
         zIndex: 2,
-        width: 24,
-        height: 24,
+        width: 18,
+        height: 18,
         borderRadius: '50%',
         boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
         backgroundColor: disabled ? '#666' : '#374d5b',
@@ -155,7 +155,7 @@ export function Track({ source, target, getTrackProps, disabled }) {
       style={{
         position: 'absolute',
         transform: 'translate(0%, -50%)',
-        height: 14,
+        height: 10,
         zIndex: 1,
         backgroundColor: disabled ? '#999' : '#5b717c',
         borderRadius: 7,

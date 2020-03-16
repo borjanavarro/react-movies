@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useCallback, useContext, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Layout from '../Layout';
 import moviesApi from '../../services/moviesApi';
-// import FiltersContext from '../../contexts/Filters';
 
 const mode = 'original'
 const POSTER_URL = 'https://image.tmdb.org/t/p/' + mode + '/';
 
 function MovieDetail() {
-  // const { filtersDispatch } = useContext(FiltersContext);
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const img = useRef();
@@ -87,7 +85,7 @@ function MovieDetail() {
           {movie.reviews.map( (review, i) => {
             return <div className="review-item" key={i}>
               <div className="author">
-                <img src="example" onError={(e) => getImage(e, i)} />
+                <img src="example" onError={(e) => getImage(e, i)} alt="" />
                 <h6>{review.author}</h6>
               </div>
               <p>{review.content}</p>
