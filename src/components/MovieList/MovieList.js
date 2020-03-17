@@ -13,41 +13,115 @@ function useQuery() {
 
 function MovieList() {
   const {filters, filtersDispatch} = useContext(FiltersContext);
-
   const [movies, setMovies] = useState([]);
   const queryPage = useQuery().get('page');
-  const querySearch = useQuery().get('q');
+  const movieSearch = useQuery().get('movie');
+  const castSearch = useQuery().get('cast');
+  const genresSearch = useQuery().get('genres');
+  const yearsSearch = useQuery().get('years');
   const history = useHistory();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState('');
 
-  const getMovies = useCallback( async () => {
+  const getMoviesByName = useCallback( async () => {
     setLoading(true);
-    const movies = await moviesApi.getBySearch(filters.search, filters.pages.current);
+    const movies = await moviesApi.getMoviesByName(filters.movie, filters.pages.current);
     setMovies(movies.results);
     filtersDispatch({totalPages: movies.total_pages, type: 'CHANGE_TOTAL_PAGES'});
+    setTitle([filters.movie, 'movie names', movies.total_results]);
     setLoading(false);
-  }, [filters.search, filters.pages, filtersDispatch]);
+  }, [filters.movie, filters.pages, filtersDispatch]);
+
+  const getMoviesByCast = useCallback( async () => {
+    setLoading(true);
+    const data = await moviesApi.getMoviesByCast(filters.cast, filters.pages.current);
+    setMovies(filterResults(data));
+    filtersDispatch({totalPages: data.total_pages, type: 'CHANGE_TOTAL_PAGES'});
+    setTitle([filters.cast, 'movie cast', data.total_results]);
+    setLoading(false);
+  }, [filters.cast, filters.pages, filtersDispatch]);
+
+  const getMoviesByYearsRangeAndGenres = useCallback( async () => {
+    setLoading(true);
+    const data = await moviesApi.getMoviesByYearsRangeAndGenres(filters.years, filters.genres, filters.pages.current);
+    setMovies(data.results);
+    filtersDispatch({totalPages: data.total_pages, type: 'CHANGE_TOTAL_PAGES'});
+    setTitle(['discover', 'movie genres and years range', data.total_results]);
+    setLoading(false);
+  }, [filters.years, filters.genres, filters.pages, filtersDispatch]);
+
+  const getPopularMovies = useCallback( async () => {
+    setLoading(true);
+    const data = await moviesApi.getPopularMovies(filters.pages.current);
+    setMovies(data.results);
+    filtersDispatch({totalPages: data.total_pages, type: 'CHANGE_TOTAL_PAGES'});
+    setTitle(['popular movies', 'all categories', data.total_results]);
+    setLoading(false);
+  }, [filters.pages, filtersDispatch]);
+
+  const filterResults = (data) => {
+    let movies = [];
+    let moviesIds = [];
+
+    data.results.forEach( person => {
+      person.known_for.forEach( movie => {
+        if ( !moviesIds.includes(movie.id) ) {
+          movies.push(movie);
+          moviesIds.push(movie.id);
+        }
+      });
+    });
+    return movies;
+  }
 
   const getFilter = useCallback ( () => {
-    if ( querySearch && queryPage ) {
-      return {search: querySearch, page: queryPage, type: 'CHANGE_SEARCH_&_PAGE'};
+    if ( movieSearch && queryPage ) {
+      return {movie: movieSearch, page: queryPage, type: 'CHANGE_MOVIE_&_PAGE'};
     }
-    if ( querySearch && !queryPage ) {
-      return {search: querySearch, type: 'CHANGE_SEARCH'};
+    if ( movieSearch && !queryPage ) {
+      return {movie: movieSearch, type: 'CHANGE_MOVIE'};
+    }
+    if ( castSearch && queryPage ) {
+      return {cast: castSearch, page: queryPage, type: 'CHANGE_CAST_&_PAGE'};
+    }
+    if ( castSearch && !queryPage ) {
+      return {cast: castSearch, type: 'CHANGE_CAST'};
+    }
+    if ( (genresSearch || yearsSearch) && !queryPage ) {
+      return {
+        genres: genresSearch ? genresSearch : '',
+        years: yearsSearch ? yearsSearch : '1920-2020',
+        type: 'CHANGE_GENRES_&_YEARS'
+      };
+    }
+    if ( (genresSearch || yearsSearch) && queryPage ) {
+      return {
+        genres: genresSearch ? genresSearch : '',
+        years: yearsSearch ? yearsSearch : '1920-2020',
+        page: queryPage,
+        type: 'CHANGE_GENRES_&_YEARS_&_PAGE'
+      };
     }
     history.replace('/');
     return {type: 'RESET'};
-  }, [querySearch, queryPage, history]);
+  }, [movieSearch, castSearch, genresSearch, yearsSearch, queryPage, history]);
 
   useEffect ( () => {
     filtersDispatch(getFilter());
 
-    if ( querySearch ) {
-      getMovies();
+    if ( movieSearch ) {
+      getMoviesByName();
+    } else if ( castSearch ) {
+      getMoviesByCast(); 
+    } else if ( yearsSearch || genresSearch ) {
+      getMoviesByYearsRangeAndGenres();
     } else {
-      setMovies([]);
+      getPopularMovies();
     }
-  }, [querySearch, filtersDispatch, getMovies, getFilter]);
+  }, [
+    movieSearch, castSearch, yearsSearch, genresSearch, filtersDispatch,
+    getMoviesByName, getMoviesByCast, getMoviesByYearsRangeAndGenres, getPopularMovies, getFilter
+  ]);
 
   if ( loading ) {
     return (
@@ -71,7 +145,7 @@ function MovieList() {
   }
 
   return (
-    <Layout>
+    <Layout title={title}>
       <main className="movie-list">
           {movies.map( (movie) => {
             return <MovieListItem key={movie.id} movie={movie} />

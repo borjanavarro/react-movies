@@ -10,33 +10,25 @@ const sliderStyle = {
 const today = new Date();
 
 const domain = [today.getFullYear() - 100, today.getFullYear()]
-const defaultValues = [today.getFullYear() - 100, today.getFullYear()];
 
 class YearsSlider extends Component {
-  state = {
-    values: defaultValues.slice(),
-    update: defaultValues.slice(),
-  }
-
-  componentDidMount() {
-    this.props.setMinYear(defaultValues[0]);
-    this.props.setMaxYear(defaultValues[1]);
-  }
+  // state = {
+  //   values: defaultValues.slice(),
+  //   update: defaultValues.slice(),
+  // }
 
   // onUpdate = update => {
   //   this.setState({ update })
   // }
 
-  onChange = values => {
-    // this.setState({ values });
-    this.props.setMinYear(values[0]);
-    this.props.setMaxYear(values[1]);
-  }
+  // onChange = values => {
+  //   this.setState({ values });
+  // }
 
   render() {
-    const {
-      state: { values/*, update */ },
-    } = this
+    // const {
+    //   state: { values, update },
+    // } = this
 
     return (
       <div style={{ height: 20, width: '100%' }}>
@@ -47,8 +39,9 @@ class YearsSlider extends Component {
           domain={domain}
           rootStyle={sliderStyle}
           onUpdate={this.onUpdate}
-          onChange={this.onChange}
-          values={values}
+          // onChange={this.onChange}
+          onChange={ values => this.props.onChangeCallback(values) }
+          values={[this.props.minYear, this.props.maxYear]}
         >
           <Rail>
             {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}

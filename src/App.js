@@ -11,11 +11,6 @@ import MovieDetail from './components/MovieDetail';
 
 function reducer(state, action) {
   switch(action.type) {
-    case 'CHANGE_SEARCH_&_PAGE':
-      state.search = action.search;
-      state.pages.current = action.page;
-      return state;
-
     case 'CHANGE_PAGE':
       state.pages.current = action.page;
       return state;
@@ -24,9 +19,40 @@ function reducer(state, action) {
       state.pages.total = action.totalPages;
       return state;
 
-    case 'CHANGE_SEARCH': 
-      state.search = action.search;
+    case 'CHANGE_MOVIE_&_PAGE':
+      state.movie = action.movie;
+      state.pages.current = action.page;
+      state.cast = '';
+      return state;
+
+    case 'CHANGE_MOVIE': 
+      state.movie = action.movie;
       state.pages = {current: 1, total: 1};
+      state.cast = '';
+      return state;
+
+    case 'CHANGE_GENRES_&_YEARS': 
+      state.genres = action.genres;
+      state.years = action.years;
+      state.pages = {current: 1, total: 1};
+      return state;
+
+    case 'CHANGE_GENRES_&_YEARS_&_PAGE': 
+      state.genres = action.genres;
+      state.years = action.years;
+      state.pages.current = action.page;
+      return state;
+
+    case 'CHANGE_CAST': 
+      state.cast = action.cast;
+      state.pages = {current: 1, total: 1};
+      state.search = '';
+      return state;
+
+    case 'CHANGE_CAST_&_PAGE':
+      state.cast = action.cast;
+      state.pages.current = action.page;
+      state.search = '';
       return state;
 
     case 'RESET':
@@ -43,7 +69,9 @@ function init() {
 
 const initialValues = {
   pages: { current: 1, total: 1 },
-  search: ''
+  movie: '',
+  genres: '',
+  cast: ''
 };
 
 function App() {
