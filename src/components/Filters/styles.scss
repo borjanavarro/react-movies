@@ -1,87 +1,92 @@
 $genre-hover-color: rgba($blue, 0.3);
 
-.filters {
-  position: absolute;
-  width: 100%;
-  padding: 15px 20px;
-  border: 1px solid $border-color;
+.filters-wrapper {
+  position: relative;
+  height: 100%;
 
-  form > * {
-    margin-bottom: 15px;
-  }
-
-  .separator {
-    margin: 7px 40px 15px;
-    border-top: 1px solid lightgray;
-
-    p {
-      background-color: white;
-      width: 50px;
-      display: block;
-      margin: -10px auto 0 auto;
-      color: lightgray;
-      text-align: center;
-    }
-
-    &.discover p {
-      width: 125px;
-    }
-  }
-
-  input[type="text"] {
-    border: 1px solid $border-color;
-    padding: 10px;
+  .filters {
+    position: absolute;
     width: 100%;
-  }
-
-  .years-slider {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    
-    label {
-      margin-bottom: 20px;
-      display: block;
-      text-align: center;
-
-      .min-year,
-      .max-year {
-        border: 1px solid $border-color;
-        padding: 5px 0;
+    padding: 15px 20px;
+    border: 1px solid $border-color;
+  
+    form > * {
+      margin-bottom: 15px;
+    }
+  
+    .separator {
+      margin: 7px 40px 15px;
+      border-top: 1px solid lightgray;
+  
+      p {
+        background-color: white;
         width: 50px;
-        display: inline-block;
+        display: block;
+        margin: -10px auto 0 auto;
+        color: lightgray;
         text-align: center;
       }
+  
+      &.discover p {
+        width: 125px;
+      }
     }
-  }
-
-  .genre-wrapper {
-    .genre-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: -3px;
   
-      .genre {
-        padding: 5px 10px;
-        border: 1px solid $border-color;
-        font-size: 13px;
-        margin: 3px;
-        
-        &:hover {
-          background-color: $genre-hover-color;
-          border: 1px solid $genre-hover-color;
-          color: white;
+    input[type="text"] {
+      border: 1px solid $border-color;
+      padding: 10px;
+      width: 100%;
+    }
+  
+    .years-slider {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      
+      label {
+        margin-bottom: 20px;
+        display: block;
+        text-align: center;
+  
+        .min-year,
+        .max-year {
+          border: 1px solid $border-color;
+          padding: 5px 0;
+          width: 50px;
+          display: inline-block;
+          text-align: center;
         }
+      }
+    }
   
-        &.selected {
-          background-color: $dark-blue;
-          border: 1px solid $dark-blue;
-          color: white;
-  
-          // &:hover {
-          //   background-color: $genre-hover-color;
-          //   border: 1px solid $genre-hover-color;
-          // }
+    .genre-wrapper {
+      .genre-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: -3px;
+    
+        .genre {
+          padding: 5px 10px;
+          border: 1px solid $border-color;
+          font-size: 13px;
+          margin: 3px;
+          
+          &:hover {
+            background-color: $genre-hover-color;
+            border: 1px solid $genre-hover-color;
+            color: white;
+          }
+    
+          &.selected {
+            background-color: $dark-blue;
+            border: 1px solid $dark-blue;
+            color: white;
+    
+            // &:hover {
+            //   background-color: $genre-hover-color;
+            //   border: 1px solid $genre-hover-color;
+            // }
+          }
         }
       }
     }

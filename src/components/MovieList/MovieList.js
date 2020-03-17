@@ -55,7 +55,7 @@ function MovieList() {
     const data = await moviesApi.getPopularMovies(filters.pages.current);
     setMovies(data.results);
     filtersDispatch({totalPages: data.total_pages, type: 'CHANGE_TOTAL_PAGES'});
-    setTitle(['popular movies', 'all categories', data.total_results]);
+    setTitle(['popular', 'all categories', data.total_results]);
     setLoading(false);
   }, [filters.pages, filtersDispatch]);
 

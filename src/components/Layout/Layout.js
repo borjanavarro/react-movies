@@ -17,7 +17,7 @@ function Layout({children, title}) {
             <h5>Searched in {title[1]}</h5>
             <h5>Approximately {title[2]} results</h5>
           </div>
-        ) : ''}
+        ) : <div className="title"></div>}
         <Row>
           <Col lg={4} >
               <Filters />

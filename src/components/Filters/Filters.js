@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import moviesApi from '../../services/moviesApi';
 // import FiltersContext from '../../contexts/Filters';
+import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
 
 const today = new Date();
@@ -10,7 +11,8 @@ const yearsDefaultValues = [today.getFullYear() - 100, today.getFullYear()]
 
 function Filters() {
   // const {filters, filtersDispatch} = useContext(FiltersContext);
-  const [styles, setStyles] = useState({top: 0});
+  const [mounted, setMounted] = useState(false);
+  const styles = useScrollable(mounted);
   const [genres, setGenres] = useState([]);
   const history = useHistory();
   const [minYear, setMinYear] = useState(yearsDefaultValues[0]);
@@ -22,31 +24,6 @@ function Filters() {
   const yearsSearch = params.get('years');
   const [movieInput, setMovieInput] = useState('');
   const [castInput, setCastInput] = useState('');
-
-  const handleScroll = useCallback( () => {
-    const footer = document.querySelector('footer');
-    const filters = document.querySelector('.filters');
-    const pageContainer = document.querySelector('.page-container');
-
-    const filtersPadding = 20;
-    const filtersStartPosition = pageContainer.offsetTop - filtersPadding;
-    let filtersHeight = filters.offsetHeight + filtersPadding;
-    const scrolldownLimit = footer.offsetTop - filtersPadding;
-
-    if ( window.scrollY + filtersHeight < scrolldownLimit) {
-      if ( window.scrollY > filtersStartPosition ) {
-        setStyles({top: window.scrollY - filtersStartPosition})
-      } else {
-        setStyles({top: 0});
-      }
-    }
-  }, [])
-
-  useEffect( () => {
-    window.addEventListener('scroll', handleScroll, true);
-
-    return window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll])
 
   const resetGenres = useCallback( (ids) => {
     const genres = document.querySelectorAll('.genre-cloud .genre');
@@ -70,6 +47,10 @@ function Filters() {
       resetGenres(true);
     }
   }, [genresSearch, resetGenres]);
+
+  useEffect( () => {
+    setMounted(true);
+  }, [])
 
   useEffect ( () => {
     getGenres();
@@ -129,6 +110,7 @@ function Filters() {
     clearOtherFilters('discover');
     params.delete('cast');
     params.delete('movie');
+    params.delete('page');
     params.set('genres', newGenres.join(','));
     history.push('/?' + params.toString() );
   }
@@ -160,11 +142,13 @@ function Filters() {
     clearOtherFilters('discover');
     params.delete('cast');
     params.delete('movie');
+    params.delete('page');
     params.set('years', values[0] + '-' + values[1]);
     history.push('/?' + params.toString() );
   }
 
   return (
+    <div className="filters-wrapper">
     <aside className="filters" style={styles}>
       <h5>Search by</h5>
       <form action="" onSubmit={handleSubmit}>
@@ -194,6 +178,7 @@ function Filters() {
         </div>
       </form>
     </aside>
+    </div>
   );
 }
 
