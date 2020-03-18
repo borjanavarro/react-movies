@@ -1,68 +1,64 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
-import moviesApi from '../../services/moviesApi';
-import FiltersContext from '../../contexts/Filters';
+import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
+import GenresCloud from '../GenresCloud';
 
 function Filters() {
-  const {filters, filtersDispatch} = useContext(FiltersContext);
-  const [styles, setStyles] = useState({top: 0});
-  const [labelStyles, setLabelStyles] = useState({left: 0});
-  const [genres, setGenres] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  const [resetChilds, setResetChilds] = useState(false);
+  const [focused, setFocused] = useState('');
+  const styles = useScrollable(mounted);
+  const [movieInput, setMovieInput] = useState('');
+  const [castInput, setCastInput] = useState('');
+  const params = new URLSearchParams(useLocation().search);
+  const movieSearch = params.get('movie');
+  const castSearch = params.get('cast');
   const history = useHistory();
-  const [maxYear, setMaxYear] = useState();
-  const [minYear, setMinYear] = useState();
-
-  const handleScroll = useCallback( () => {
-    const footer = document.querySelector('footer');
-    const filters = document.querySelector('.filters');
-    const pageContainer = document.querySelector('.page-container');
-
-    const filtersPadding = 20;
-    const filtersStartPosition = pageContainer.offsetTop - filtersPadding;
-    let filtersHeight = filters.offsetHeight + filtersPadding;
-    const scrolldownLimit = footer.offsetTop - filtersPadding;
-
-    if ( window.scrollY + filtersHeight < scrolldownLimit) {
-      if ( window.scrollY > filtersStartPosition ) {
-        setStyles({top: window.scrollY - filtersStartPosition})
-      } else {
-        setStyles({top: 0});
-      }
-    }
-  }, [])
 
   useEffect( () => {
-    window.addEventListener('scroll', handleScroll, true);
-
-    return window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll])
-
-  const getGenres = useCallback( async () => {
-    const genres = await moviesApi.getAllGenres();
-    setGenres(genres.genres);
-  }, []);
+    setMounted(true);
+  }, [])
 
   useEffect ( () => {
-    getGenres();
-  }, [getGenres])
+    if ( movieSearch ) setMovieInput(movieSearch);
+    if ( castSearch ) setCastInput(castSearch);
+  }, [movieSearch, castSearch])
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const allowedChars = new RegExp(/^[a-z0-9| ]*$/i);
-
-    if ( allowedChars.test(value) ) {
-      history.push('/?q=' + encodeURI(value));
-      filtersDispatch({search: value, type: 'CHANGE_SEARCH'});
+  useEffect ( () => {
+    if ( resetChilds ) {
+      setResetChilds(false);
+      if ( focused !== 'movie' ) setMovieInput('');
+      if ( focused !== 'cast' ) setCastInput('');
     }
-    // podria poner algun tipo de validación
+  }, [resetChilds, focused])
+
+  const validateSearch = useCallback( (value) => {
+    const allowedChars = new RegExp(/^[a-z0-9| ]*$/i);
+    return allowedChars.test(value);
+  }, [])
+
+  const movieChange = (e) => {
+    const value = e.target.value;
+    
+    if ( validateSearch(value) ) {
+      setFocused('movie');
+      setResetChilds(true);
+      setMovieInput(value);
+      history.push('/?movie=' + encodeURI(value));
+    }
   }
 
-  const genreClick = (e) => {
-    const genreId = e.currentTarget.dataset.id;
-    e.currentTarget.classList.toggle('selected');
-    // añadir o quitar en filtros
+  const castChange = (e) => {
+    const value = e.target.value;
+    
+    if ( validateSearch(value) ) {
+      setFocused('cast');
+      setResetChilds(true);
+      setCastInput(value);
+      history.push('/?cast=' + encodeURI(value));
+    }
   }
 
   const handleSubmit = (e) => {
@@ -70,27 +66,32 @@ function Filters() {
   }
 
   return (
-    <aside className="filters" style={styles}>
-      {/* <h3>Filters</h3> */}
-      <form action="" onSubmit={handleSubmit}>
-        <div className="genre-cloud">
-          {genres.map( (genre, i) => {
-            return <button key={genre.id} className="genre" data-id={genre.id} onClick={genreClick}>{genre.name}</button>
-          })}
-        </div>
-        <input type="text" placeholder="Movie ..." value={filters.search} onChange={handleChange} />
-        <input type="text" placeholder="Casting ..." />
-        <div className="years-slider">
-          <label htmlFor="years">
-            from &nbsp;
-            <span className="min-year">{minYear}</span>
-            &nbsp; to &nbsp;
-            <span className="max-year">{maxYear}</span>
-          </label>
-          <YearsSlider setMinYear={setMinYear} setMaxYear={setMaxYear} />
-        </div>
-      </form>
-    </aside>
+    <div className="filters-wrapper">
+      <aside className="filters" style={styles}>
+        <h5>Search by</h5>
+        <form action="" onSubmit={handleSubmit}>
+          <input type="text" placeholder="Movie ..." value={movieInput} onChange={movieChange} />
+          <div className="separator">
+            <p>OR</p>
+          </div>
+          <input type="text" placeholder="Cast ..." value={castInput} onChange={castChange} />
+          <div className="separator discover">
+            <p>OR DISCOVER</p>
+          </div>
+          <YearsSlider
+            reset={resetChilds && focused !== 'discover'}
+            setReset={setResetChilds}
+            setFocused={setFocused}
+          />
+          <GenresCloud
+            reset={resetChilds && focused !== 'discover'}
+            setReset={setResetChilds}
+            setFocused={setFocused}
+            parentMounted={mounted}
+          />
+        </form>
+      </aside>
+    </div>
   );
 }
 

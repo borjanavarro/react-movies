@@ -6,7 +6,7 @@ const API_KEY = '03497ae682408a3f3dd9a95f7f587892';
 const moviesApi = (() => {
 
   return {
-    getBySearch: function(query, page) {
+    getMoviesByName: function(query, page) {
       return new Promise( async (resolve, reject) => {
         const url = BASE_URL + 'search/movie?api_key=' + API_KEY + '&query=' + encodeURI(query) + '&page=' + page;
     
@@ -14,7 +14,54 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    getMoviesByCast: function(query, page) {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'search/person?api_key=' + API_KEY + '&query=' + encodeURI(query) + '&page=' + page;
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          // reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    getMoviesByYearsRangeAndGenres: function(years, genres, page) {
+      return new Promise( async (resolve, reject) => {
+        years = years ? years.split('-') : null;
+        let url = BASE_URL + 'discover/movie?api_key=' + API_KEY;
+        url += years ? '&release_date.gte=' + encodeURI(years[0] + '-01-01') : '';
+        url += years ? '&release_date.lte=' + encodeURI(years[1] + '-01-01') : '';
+        url += genres ? '&with_genres=' + encodeURI(genres) : '';
+        url += page ? '&page=' + page : '';
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          // reject('Error fetching');
+          resolve([]);
+        }
+      })
+    },
+
+    getPopularMovies: function(page) {
+      return new Promise( async (resolve, reject) => {
+        const url = BASE_URL + 'movie/popular?api_key=' + API_KEY + '&page=' + page;
+    
+        try {
+          const response = await axios.get(url);
+          resolve(response.data);
+        } catch (err) {
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -28,7 +75,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -42,7 +89,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -56,7 +103,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -70,8 +117,8 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
-          resolve(null);
+          // reject('Error fetching');
+          resolve([]);
         }
       })
     }

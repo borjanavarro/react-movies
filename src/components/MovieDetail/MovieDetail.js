@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useCallback, useContext, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Layout from '../Layout';
 import moviesApi from '../../services/moviesApi';
-// import FiltersContext from '../../contexts/Filters';
 
 const mode = 'original'
 const POSTER_URL = 'https://image.tmdb.org/t/p/' + mode + '/';
 
 function MovieDetail() {
-  // const { filtersDispatch } = useContext(FiltersContext);
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const img = useRef();
@@ -25,7 +23,6 @@ function MovieDetail() {
       movie.reviews = reviews ? reviews.results : null;
       movie.cast = credits ? credits.cast : null;
       movie.crew = credits ? credits.crew : null;
-      console.log(movie);
       setMovie(movie);
     });
   }, [movieId]);
@@ -47,7 +44,6 @@ function MovieDetail() {
   }
 
   const getImage = (e, i) => {
-    console.log(i);
     setTimeout(() => {
       e.target.src = "https://thispersondoesnotexist.com/image?hola=" + Math.floor(Math.random() * 100000);
     }, 1500 * (i + 1) * 1.5, e.persist());
@@ -55,16 +51,18 @@ function MovieDetail() {
 
   if ( !movie ) {
     return (
-      <Layout>
-        <div className="no-results">
-          <h2>No results</h2>
+      <Layout title="" titleClass="hidden">
+        <div className="movie-detail">
+          <div className="no-results">
+            <h2>No results</h2>
+          </div>
         </div>
       </Layout>
     );
   }
   
   return (
-    <Layout>
+    <Layout title="" titleClass="hidden">
       <div className="movie-detail">
         <img src={movie.details.poster_path ? POSTER_URL + movie.details.poster_path : ''} alt="Movie Poster" />
         <div className="title">
@@ -87,7 +85,7 @@ function MovieDetail() {
           {movie.reviews.map( (review, i) => {
             return <div className="review-item" key={i}>
               <div className="author">
-                <img src="example" onError={(e) => getImage(e, i)} />
+                <img src="example" onError={(e) => getImage(e, i)} alt="" />
                 <h6>{review.author}</h6>
               </div>
               <p>{review.content}</p>

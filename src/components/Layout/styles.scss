@@ -1,6 +1,19 @@
 .page-container {
   margin: 60px 0 120px;
 
+  > .title {
+    margin-bottom: 20px;
+    min-height: 120px;
+
+    &.hidden {
+      min-height: 60px;
+    }
+    
+    * {
+      font-weight: normal;
+    }
+  }
+
   aside {
     position: relative;
   }
