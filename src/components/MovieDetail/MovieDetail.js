@@ -23,7 +23,6 @@ function MovieDetail() {
       movie.reviews = reviews ? reviews.results : null;
       movie.cast = credits ? credits.cast : null;
       movie.crew = credits ? credits.crew : null;
-      console.log(movie);
       setMovie(movie);
     });
   }, [movieId]);
@@ -45,7 +44,6 @@ function MovieDetail() {
   }
 
   const getImage = (e, i) => {
-    console.log(i);
     setTimeout(() => {
       e.target.src = "https://thispersondoesnotexist.com/image?hola=" + Math.floor(Math.random() * 100000);
     }, 1500 * (i + 1) * 1.5, e.persist());
@@ -53,16 +51,18 @@ function MovieDetail() {
 
   if ( !movie ) {
     return (
-      <Layout>
-        <div className="no-results">
-          <h2>No results</h2>
+      <Layout title="" titleClass="hidden">
+        <div className="movie-detail">
+          <div className="no-results">
+            <h2>No results</h2>
+          </div>
         </div>
       </Layout>
     );
   }
   
   return (
-    <Layout>
+    <Layout title="" titleClass="hidden">
       <div className="movie-detail">
         <img src={movie.details.poster_path ? POSTER_URL + movie.details.poster_path : ''} alt="Movie Poster" />
         <div className="title">

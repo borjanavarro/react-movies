@@ -14,7 +14,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -28,7 +28,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -47,7 +47,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -61,7 +61,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -75,7 +75,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -89,7 +89,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -103,7 +103,7 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
+          // reject('Error fetching');
           resolve([]);
         }
       })
@@ -117,8 +117,8 @@ const moviesApi = (() => {
           const response = await axios.get(url);
           resolve(response.data);
         } catch (err) {
-          reject('Error fetching');
-          resolve(null);
+          // reject('Error fetching');
+          resolve([]);
         }
       })
     }

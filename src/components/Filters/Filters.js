@@ -1,87 +1,50 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import moviesApi from '../../services/moviesApi';
-// import FiltersContext from '../../contexts/Filters';
 import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
-
-const today = new Date();
-const yearsDefaultValues = [today.getFullYear() - 100, today.getFullYear()]
+import GenresCloud from '../GenresCloud';
 
 function Filters() {
-  // const {filters, filtersDispatch} = useContext(FiltersContext);
   const [mounted, setMounted] = useState(false);
+  const [resetChilds, setResetChilds] = useState(false);
+  const [focused, setFocused] = useState('');
   const styles = useScrollable(mounted);
-  const [genres, setGenres] = useState([]);
-  const history = useHistory();
-  const [minYear, setMinYear] = useState(yearsDefaultValues[0]);
-  const [maxYear, setMaxYear] = useState(yearsDefaultValues[1]);
+  const [movieInput, setMovieInput] = useState('');
+  const [castInput, setCastInput] = useState('');
   const params = new URLSearchParams(useLocation().search);
   const movieSearch = params.get('movie');
   const castSearch = params.get('cast');
-  const genresSearch = params.get('genres');
-  const yearsSearch = params.get('years');
-  const [movieInput, setMovieInput] = useState('');
-  const [castInput, setCastInput] = useState('');
-
-  const resetGenres = useCallback( (ids) => {
-    const genres = document.querySelectorAll('.genre-cloud .genre');
-    
-    genres.forEach( genre => genre.classList.remove('selected') );
-
-    if ( ids ) {
-      let genresIds = genresSearch.split(',');
-      genresIds = genresIds.map( id => parseInt(id) );
-
-      genres.forEach( genre => {
-        if ( genresIds.includes(parseInt(genre.dataset.id)) ) genre.classList.add('selected');
-      });
-    }
-  }, [genresSearch])
-
-  const getGenres = useCallback( async () => {
-    const genres = await moviesApi.getAllGenres();
-    setGenres(genres.genres);
-    if ( genresSearch ) {
-      resetGenres(true);
-    }
-  }, [genresSearch, resetGenres]);
+  const history = useHistory();
 
   useEffect( () => {
     setMounted(true);
   }, [])
 
   useEffect ( () => {
-    getGenres();
-  }, [getGenres])
+    if ( movieSearch ) setMovieInput(movieSearch);
+    if ( castSearch ) setCastInput(castSearch);
+  }, [movieSearch, castSearch])
 
   useEffect ( () => {
-    if ( movieSearch ) {
-      setMovieInput(movieSearch);
+    if ( resetChilds ) {
+      setResetChilds(false);
+      if ( focused !== 'movie' ) setMovieInput('');
+      if ( focused !== 'cast' ) setCastInput('');
     }
-    if ( castSearch ) {
-      setCastInput(castSearch);
-    }
-    if ( yearsSearch ) {
-      let years = yearsSearch.split('-');
-      years = years.map( year => parseInt(year) );
-      setMinYear(years[0]);
-      setMaxYear(years[1]);
-    }
-  }, [movieSearch, castSearch, yearsSearch])
+  }, [resetChilds, focused])
 
-  const validateSearch = (value) => {
+  const validateSearch = useCallback( (value) => {
     const allowedChars = new RegExp(/^[a-z0-9| ]*$/i);
-
     return allowedChars.test(value);
-  }
+  }, [])
 
   const movieChange = (e) => {
     const value = e.target.value;
     
     if ( validateSearch(value) ) {
-      clearOtherFilters('movie');
+      setFocused('movie');
+      setResetChilds(true);
       setMovieInput(value);
       history.push('/?movie=' + encodeURI(value));
     }
@@ -91,44 +54,10 @@ function Filters() {
     const value = e.target.value;
     
     if ( validateSearch(value) ) {
-      clearOtherFilters('cast');
+      setFocused('cast');
+      setResetChilds(true);
       setCastInput(value);
       history.push('/?cast=' + encodeURI(value));
-    }
-  }
-
-  const genreClick = (e) => {
-    const genreId = e.currentTarget.dataset.id;
-    let newGenres = genresSearch ? genresSearch.split(',') : [];
-
-    if ( e.currentTarget.classList.contains('selected') ) {
-      newGenres = newGenres.filter( genre => parseInt(genre) !== parseInt(genreId));
-    } else {
-      newGenres.push(genreId);
-    }
-    e.currentTarget.classList.toggle('selected');
-    clearOtherFilters('discover');
-    params.delete('cast');
-    params.delete('movie');
-    params.delete('page');
-    params.set('genres', newGenres.join(','));
-    history.push('/?' + params.toString() );
-  }
-
-  const clearOtherFilters = (focused) => {
-    if ( focused === 'discover' ) {
-      setCastInput('');
-      setMovieInput('');
-    } else {
-      resetGenres(false);
-      setMinYear(yearsDefaultValues[0]);
-      setMaxYear(yearsDefaultValues[1]);
-
-      if ( focused === 'movie') {
-        setCastInput('');
-      } else if ( focused === 'cast' ) {
-        setMovieInput('');
-      }
     }
   }
 
@@ -136,48 +65,32 @@ function Filters() {
     e.preventDefault();
   }
 
-  const sliderOnChange = (values) => {
-    setMinYear(values[0]);
-    setMaxYear(values[1]);
-    clearOtherFilters('discover');
-    params.delete('cast');
-    params.delete('movie');
-    params.delete('page');
-    params.set('years', values[0] + '-' + values[1]);
-    history.push('/?' + params.toString() );
-  }
-
   return (
     <div className="filters-wrapper">
-    <aside className="filters" style={styles}>
-      <h5>Search by</h5>
-      <form action="" onSubmit={handleSubmit}>
-        <input type="text" placeholder="Movie ..." value={movieInput} onChange={movieChange} />
-        <div className="separator">
-          <p>OR</p>
-        </div>
-        <input type="text" placeholder="Cast ..." value={castInput} onChange={castChange} />
-        <div className="separator discover">
-          <p>OR DISCOVER</p>
-        </div>
-        <div className="years-slider">
-          <label htmlFor="years">
-            from &nbsp;
-            <span className="min-year">{minYear}</span>
-            &nbsp; to &nbsp;
-            <span className="max-year">{maxYear}</span>
-          </label>
-          <YearsSlider minYear={minYear} maxYear={maxYear} onChangeCallback={sliderOnChange} />
-        </div>
-        <div className="genre-wrapper">
-          <div className="genre-cloud">
-            {genres.map( (genre, i) => {
-              return <button key={genre.id} className="genre" data-id={genre.id} onClick={genreClick}>{genre.name}</button>
-            })}
+      <aside className="filters" style={styles}>
+        <h5>Search by</h5>
+        <form action="" onSubmit={handleSubmit}>
+          <input type="text" placeholder="Movie ..." value={movieInput} onChange={movieChange} />
+          <div className="separator">
+            <p>OR</p>
           </div>
-        </div>
-      </form>
-    </aside>
+          <input type="text" placeholder="Cast ..." value={castInput} onChange={castChange} />
+          <div className="separator discover">
+            <p>OR DISCOVER</p>
+          </div>
+          <YearsSlider
+            reset={resetChilds && focused !== 'discover'}
+            setReset={setResetChilds}
+            setFocused={setFocused}
+          />
+          <GenresCloud
+            reset={resetChilds && focused !== 'discover'}
+            setReset={setResetChilds}
+            setFocused={setFocused}
+            parentMounted={mounted}
+          />
+        </form>
+      </aside>
     </div>
   );
 }

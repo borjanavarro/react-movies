@@ -7,8 +7,6 @@ const POSTER_URL = 'https://image.tmdb.org/t/p/' + mode + '/';
 function MovieListItem({ movie }) {
   let { id, title, poster_path, release_date, vote_average, vote_count } = movie;
 
-  // console.log(movie);
-
   return (
     <Link to={'/detail/' + id}>
     <div className="movie-item">
