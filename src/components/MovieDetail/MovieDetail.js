@@ -51,7 +51,7 @@ function MovieDetail() {
 
   if ( !movie ) {
     return (
-      <Layout title="" titleClass="hidden">
+      <Layout>
         <div className="movie-detail">
           <div className="no-results">
             <h2>No results</h2>
@@ -62,7 +62,7 @@ function MovieDetail() {
   }
   
   return (
-    <Layout title="" titleClass="hidden">
+    <Layout>
       <div className="movie-detail">
         <img src={movie.details.poster_path ? POSTER_URL + movie.details.poster_path : ''} alt="Movie Poster" />
         <div className="title">

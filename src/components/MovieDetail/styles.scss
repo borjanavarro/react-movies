@@ -1,9 +1,13 @@
 .movie-detail {
   width: 100%;
-  min-height: 574px;
+  min-height: calc(100vh - #{$header-height} - #{$page-container-mb});
+
+  @include media-breakpoint-up(md) {
+    min-height: 574px;
+  }
 
   .title {
-    margin-bottom: 30px;
+    margin: 30px 0;
 
     h1 {
       font-size: 26px;
@@ -15,12 +19,19 @@
   }
     
   > img {
-    height: 400px;
-    width: 266px;
-    margin-left: 30px;
-    margin-bottom: 20px;
-    float: right;
+    height: 500px;
+    width: getMovieItemWidth(500px);
     position: relative;
+    margin: 0 auto;
+    display: block;
+
+    @include media-breakpoint-up(md) {
+      float: right;
+      height: 420px;
+      width: getMovieItemWidth(420px);
+      margin-left: 30px;
+      margin-bottom: 20px;
+    }
 
     &[alt]:after {  
       display: block;
@@ -49,6 +60,10 @@
       padding: 10px 20px;
       margin-bottom: 20px;
       border: 1px solid $border-color;
+
+      p {
+        overflow-x: hidden;
+      }
 
       .author {
         display: flex;

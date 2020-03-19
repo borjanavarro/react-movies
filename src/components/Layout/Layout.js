@@ -28,7 +28,7 @@ function Layout({children, title, titleClass}) {
       </div>
     </Container>
     <Footer />
-  </>
+    </>
   )
 }
 

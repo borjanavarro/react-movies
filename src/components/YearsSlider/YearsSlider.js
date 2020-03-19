@@ -4,11 +4,11 @@ import {useHistory, useLocation} from 'react-router-dom';
 import RangeSlider from '../RangeSlider';
 
 const today = new Date();
-const yearsDefaultValues = [today.getFullYear() - 100, today.getFullYear()]
+const defaultValues = [today.getFullYear() - 100, today.getFullYear()]
 
 function YearsSlider({reset, setReset, setFocused}) {
-  const [minYear, setMinYear] = useState(yearsDefaultValues[0]);
-  const [maxYear, setMaxYear] = useState(yearsDefaultValues[1]);
+  const [minYear, setMinYear] = useState(defaultValues[0]);
+  const [maxYear, setMaxYear] = useState(defaultValues[1]);
   const params = new URLSearchParams(useLocation().search);
   const yearsSearch = params.get('years');
   const history = useHistory();
@@ -21,8 +21,8 @@ function YearsSlider({reset, setReset, setFocused}) {
   }, [yearsSearch])
 
   const clear = useCallback( () => {
-    setMinYear(yearsDefaultValues[0]);
-    setMaxYear(yearsDefaultValues[1]);
+    setMinYear(defaultValues[0]);
+    setMaxYear(defaultValues[1]);
   }, [])
 
   const handleChange = (values) => {
@@ -33,8 +33,12 @@ function YearsSlider({reset, setReset, setFocused}) {
     params.delete('cast');
     params.delete('movie');
     params.delete('page');
-    params.set('years', values[0] + '-' + values[1]);
-    history.push('/?' + params.toString());
+    if ( values[0] === defaultValues[0] && values[1] === defaultValues[1] ) {
+      history.push('/');
+    } else {
+      params.set('years', values[0] + '-' + values[1]);
+      history.push('/?' + params.toString());
+    }
   }
 
   useEffect( () => {

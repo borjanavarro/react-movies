@@ -2,6 +2,16 @@ $blue: rgb(91, 113, 124);
 $dark-blue: rgb(55, 77, 91);
 $soft-gray: rgb(222, 222, 222);
 
+$header-height: 60px;
+$footer-height: 60px;
+
+$page-container-mt: 40px;
+$page-container-mb: 120px;
+
+@function getMovieItemWidth($height) {
+  @return 500 / 750 * $height;
+}
+
 * {
   color: $dark-blue;
   font-family: 'Raleway', sans-serif;
@@ -11,6 +21,9 @@ $soft-gray: rgb(222, 222, 222);
     outline: 0;
   }
 }
+
+h1 { font-size: 2em; }
+h5 { font-size: 1em; }
 
 button {
   &:focus,
@@ -22,9 +35,16 @@ button {
 .no-results {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  
-  h2 {
-    padding-top: 40px;
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb});
+
+  @include media-breakpoint-up(md) {
+    min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mt} - #{$page-container-mb});
   }
+}
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
 }

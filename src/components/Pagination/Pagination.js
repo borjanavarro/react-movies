@@ -13,7 +13,7 @@ const Pagination = ({totalPages}) => {
     const [page, setPage] = useState();
 
     const handleClick = (nextPage) => {
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scroll(0, 0);
       params.set('page', nextPage);
       history.push(location.pathname + '?' + params.toString());
     }

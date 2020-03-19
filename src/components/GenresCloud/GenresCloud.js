@@ -44,8 +44,17 @@ function GenresCloud({reset, setReset, setFocused}) {
     params.delete('cast');
     params.delete('movie');
     params.delete('page');
-    params.set('genres', newGenres.join(','));
-    history.push('/?' + params.toString() );
+    if ( newGenres.length !== 0 ) {
+      params.set('genres', newGenres.join(','));
+      history.push('/?' + params.toString() );
+    } else {
+      params.delete('genres');
+      if ( params.toString() === '' ) {
+        history.push('/');
+      } else {
+        history.push('/?' + params.toString() );
+      }
+    }
   }
 
   useEffect ( () => {

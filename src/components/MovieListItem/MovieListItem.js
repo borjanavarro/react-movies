@@ -18,8 +18,8 @@ function MovieListItem({ movie }) {
           <div className="flip-card-back">
             <p className="title">{title}<br/>{release_date ? '(' + release_date.substr(0, 4) + ')' : ''}</p> 
             <p className="rating">
-              <i className="far fa-star"></i>
-              {vote_count ? ' ' + parseFloat(vote_average).toFixed(1) : ' No rating'}
+              <i className="far fa-star"></i>&nbsp;
+              {vote_count ? parseFloat(vote_average).toFixed(1) : 'No rating'}
             </p>
           </div>
         </div>

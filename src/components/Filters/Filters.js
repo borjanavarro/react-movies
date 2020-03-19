@@ -46,7 +46,16 @@ function Filters() {
       setFocused('movie');
       setResetChilds(true);
       setMovieInput(value);
-      history.push('/?movie=' + encodeURI(value));
+      if ( value !== '' ) {
+        params.delete('genres');
+        params.delete('years');
+        params.delete('cast');
+        params.delete('page');
+        params.set('movie', value);
+        history.push('/?' + params.toString());
+      } else {
+        history.push('/');
+      }
     }
   }
 
@@ -57,7 +66,16 @@ function Filters() {
       setFocused('cast');
       setResetChilds(true);
       setCastInput(value);
-      history.push('/?cast=' + encodeURI(value));
+      if ( value !== '' ) {
+        params.delete('genres');
+        params.delete('years');
+        params.delete('movie');
+        params.delete('page');
+        params.set('cast', value);
+        history.push('/?' + params.toString());
+      } else {
+        history.push('/');
+      }
     }
   }
 

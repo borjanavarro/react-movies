@@ -1,9 +1,14 @@
 footer {
   background-color: $soft-gray;
-  padding: 20px;
+  height: $footer-height;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   h4 {
     color: white;
+    font-weight: normal;
+    margin: 0;
   }
 }
