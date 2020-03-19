@@ -10,12 +10,12 @@ function Header() {
 
   function showFilters(e) {
     const filters = document.querySelector('.filters-wrapper');
-    const body = document.querySelector('body');
+    const pageContainer = document.querySelector('.page-container');
 
     e.target.classList.toggle('show');
     filters.classList.toggle('show');
-    filters.style.top = (window.scrollY) + 'px';
-    body.classList.toggle('stop-scrolling');
+    // filters.style.top = (window.scrollY) + 'px';
+    pageContainer.classList.toggle('stop-scrolling');
     
     if ( e.target.classList.contains('show') ) {
       e.target.innerHTML = 'X';

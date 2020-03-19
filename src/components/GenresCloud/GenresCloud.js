@@ -55,6 +55,7 @@ function GenresCloud({reset, setReset, setFocused}) {
         history.push('/?' + params.toString() );
       }
     }
+    window.scroll(0, 0);
   }
 
   useEffect ( () => {

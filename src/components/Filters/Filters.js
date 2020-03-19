@@ -5,9 +5,6 @@ import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
 import GenresCloud from '../GenresCloud';
 
-// const HEADER_HEIGHT = 60;
-// const PAGE_CONTAINER_MT = 40;
-
 function Filters({wrapperTop}) {
   const [mounted, setMounted] = useState(false);
   const [resetChilds, setResetChilds] = useState(false);
@@ -59,6 +56,7 @@ function Filters({wrapperTop}) {
       } else {
         history.push('/');
       }
+      window.scroll(0, 0);
     }
   }
 
@@ -79,6 +77,7 @@ function Filters({wrapperTop}) {
       } else {
         history.push('/');
       }
+      window.scroll(0, 0);
     }
   }
 

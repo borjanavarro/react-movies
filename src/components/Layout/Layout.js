@@ -5,19 +5,20 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Filters from '../Filters';
 
+const LG_WIDTH = 1199;
+
 function Layout({children, title, titleClass}) {
   const [wrapperTop, setWrapperTop] = useState({top: 0});
 
   useEffect (() => {
     const content = document.querySelector('.content');
-    const header = document.querySelector('header');
-    setWrapperTop({top: window.innerWidth < 1199 ? 0 : content.offsetParent.offsetTop - header.offsetHeight});
+    setWrapperTop({top: window.innerWidth < LG_WIDTH ? 0 : content.offsetParent.offsetTop});
   }, [titleClass])
   
   return (
     <>
-    <Header />
     <Filters wrapperTop={wrapperTop} />
+    <Header />
     <Container>
       <div className="page-container">
         <div className={'title ' + (titleClass ? titleClass : '')}>

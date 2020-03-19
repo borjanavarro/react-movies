@@ -2,9 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 
 import RangeSlider from '../RangeSlider';
-
-const today = new Date();
-const defaultValues = [today.getFullYear() - 100, today.getFullYear()]
+import defaultValues from './constants';
 
 function YearsSlider({reset, setReset, setFocused}) {
   const [minYear, setMinYear] = useState(defaultValues[0]);
@@ -44,6 +42,7 @@ function YearsSlider({reset, setReset, setFocused}) {
       params.set('years', values[0] + '-' + values[1]);
       history.push('/?' + params.toString());
     }
+    window.scroll(0, 0);
   }
 
   useEffect( () => {

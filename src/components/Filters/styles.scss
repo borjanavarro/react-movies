@@ -1,7 +1,8 @@
 $genre-hover-color: rgba($blue, 0.3);
+$filters-min-height: 574px;
 
 .filters-wrapper {
-  position: relative;
+  position: fixed;
   visibility: hidden;
   display: flex;
   align-items: center;
@@ -18,6 +19,12 @@ $genre-hover-color: rgba($blue, 0.3);
     margin: 0 auto;
     padding: 0 15px;
     justify-content: flex-start;
+    position: relative;
+  }
+
+  @media (max-height: $filters-min-height) {
+    display: block;
+    overflow: scroll;
   }
 
   &.show {
@@ -28,10 +35,12 @@ $genre-hover-color: rgba($blue, 0.3);
   .filters {
     width: 100%;
     border: none;
-    padding: 15px 20px;
+    padding: 75px 20px 15px;
+    margin: 0 auto;
 
     @include media-breakpoint-up(sm) {
-      width: 85%;
+      width: 70%;
+      padding: 15px 20px;
     }
 
     @include media-breakpoint-up(md) {
@@ -43,6 +52,10 @@ $genre-hover-color: rgba($blue, 0.3);
       margin-top: 0;
       width: 30%;
       position: absolute;
+    }
+
+    @media (max-height: $filters-min-height) {
+      padding: 150px 20px;
     }
   
     form > * {

@@ -45,6 +45,8 @@ button {
 }
 
 .stop-scrolling {
-  height: 100%;
+  height: calc(100vh - #{$footer-height});
   overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
 }
