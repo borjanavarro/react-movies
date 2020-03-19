@@ -37,10 +37,10 @@ button {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb});
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mt} - #{$page-container-mb});
 
-  @include media-breakpoint-up(md) {
-    min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mt} - #{$page-container-mb});
+  h2 {
+    margin-top: $page-container-mb;
   }
 }
 

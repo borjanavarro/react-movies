@@ -48,10 +48,10 @@ function GenresCloud({reset, setReset, setFocused}) {
       params.set('genres', newGenres.join(','));
       history.push('/?' + params.toString() );
     } else {
-      params.delete('genres');
       if ( params.toString() === '' ) {
         history.push('/');
       } else {
+        params.delete('genres');
         history.push('/?' + params.toString() );
       }
     }

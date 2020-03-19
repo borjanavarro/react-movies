@@ -34,7 +34,12 @@ function YearsSlider({reset, setReset, setFocused}) {
     params.delete('movie');
     params.delete('page');
     if ( values[0] === defaultValues[0] && values[1] === defaultValues[1] ) {
-      history.push('/');
+      if ( params.toString() === '' ) {
+        history.push('/');
+      } else {
+        params.delete('years');
+        history.push('/?' + params.toString() );
+      }
     } else {
       params.set('years', values[0] + '-' + values[1]);
       history.push('/?' + params.toString());

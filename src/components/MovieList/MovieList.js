@@ -93,21 +93,20 @@ function MovieList() {
 
   if ( loading ) {
     return (
-      <Layout title={title} titleClass="">
-        <main className="movie-list" style={listHeight}>
+      <Layout title={[]} titleClass="hidden">
+        <main className="movie-list">
           <div className="no-results">
             <h2>Loading...</h2>
           </div>
         </main>
-        <Pagination />
       </Layout>
     )
   }
 
   if ( !movies || movies.length === 0 ) {
     return (
-      <Layout title={title} titleClass="">
-        <main className="movie-list" style={listHeight}>
+      <Layout title={[]} titleClass="hidden">
+        <main className="movie-list">
           <div className="no-results">
             <h2>No results</h2>
           </div>
