@@ -12,10 +12,12 @@ const Pagination = ({totalPages}) => {
     const pageParam = params.get('page');
     const [page, setPage] = useState();
 
-    const handleClick = (nextPage) => {
-      window.scroll(0, 0);
-      params.set('page', nextPage);
-      history.push(location.pathname + '?' + params.toString());
+    const handleClick = (e, nextPage) => {
+      if ( !e.target.classList.contains('disabled') ) {
+        window.scroll(0, 0);
+        params.set('page', nextPage);
+        history.push(location.pathname + '?' + params.toString());
+      }
     }
 
     useEffect (() => {
@@ -27,13 +29,13 @@ const Pagination = ({totalPages}) => {
         <div className="pagination">
             <ul>
                 <li 
-                  onClick={() => {handleClick(page - 1)}}
+                  onClick={(e) => {handleClick(e, page - 1)}}
                   className={page <= 1 ? 'disabled' : ''}
                   >
                     Previous</li>
                 <li className="page">{page}</li>
                 <li 
-                  onClick={() => {handleClick(page + 1)}}
+                  onClick={(e) => {handleClick(e, page + 1)}}
                   className={page >= totalPages ? 'disabled' : ''}
                   >
                     Next</li>
