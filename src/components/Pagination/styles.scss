@@ -2,36 +2,39 @@
   margin-top: 40px;
 
   ul {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+
+    li {
+      list-style-type: none;
       display: flex;
-      justify-content: center;
-      margin: 0 auto;
-      padding: 0;
-      width: 400px;
+      align-items: center;
+      height: 40px;
+      width: 80px;
+      padding: 0 15px;
+      cursor: pointer;
+      // line-height: 0.7;
 
-      li {
-          list-style-type: none;
-          padding: 10px 20px;
-          display: flex;
-          // line-height: 0.7;
-
-          p {
-            margin: 0;
-          }
-
-          button {
-              border: 0;
-              cursor: pointer;
-              background-color: transparent;
-
-              &:disabled {
-                  color: lightgray;
-                  cursor: not-allowed;
-              }
-          }
-
-          &.active {
-              background-color: $soft-gray;
-          }
+      &:first-child {
+        justify-content: flex-end;
       }
+
+      &.page {
+          background-color: $soft-gray;
+          width: 40px;
+          justify-content: center;
+      }
+
+      &:last-child {
+        justify-content: flex-start;
+      }
+
+      &.disabled {
+        color: lightgray;
+        cursor: not-allowed;
+      }
+    }
   }
 }

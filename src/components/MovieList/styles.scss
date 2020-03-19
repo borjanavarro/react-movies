@@ -2,9 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  min-height: 574px;
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - 120px);
   
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(sm) {
     justify-content: space-between;
+    min-height: 574px;
   }
 }

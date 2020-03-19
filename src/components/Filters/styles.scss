@@ -1,21 +1,69 @@
 $genre-hover-color: rgba($blue, 0.3);
+$filters-min-height: 574px;
 
 .filters-wrapper {
-  position: relative;
-  height: 100%;
+  position: fixed;
+  visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
+  height: 0;
+
+  @include media-breakpoint-up(lg) {
+    visibility: visible;
+    height: 100%;
+    width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+  @media (max-height: $filters-min-height) {
+    display: block;
+    overflow: scroll;
+  }
+
+  &.show {
+    visibility: visible;
+    height: 100vh;
+  }
 
   .filters {
-    position: absolute;
     width: 100%;
-    padding: 15px 20px;
-    border: 1px solid $border-color;
+    border: none;
+    padding: 75px 20px 15px;
+    margin: 0 auto;
+
+    @include media-breakpoint-up(sm) {
+      width: 70%;
+      padding: 15px 20px;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 60%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      border: 1px solid $border-color;
+      margin-top: 0;
+      width: 30%;
+      position: absolute;
+    }
+
+    @media (max-height: $filters-min-height) {
+      padding: 150px 20px;
+    }
   
     form > * {
       margin-bottom: 15px;
     }
   
     .separator {
-      margin: 7px 40px 15px;
+      margin: 7px 40px 10px;
       border-top: 1px solid lightgray;
   
       p {
@@ -39,7 +87,7 @@ $genre-hover-color: rgba($blue, 0.3);
     }
   
     .years-slider {
-      margin-top: 5px;
+      margin-top: 15px;
       margin-bottom: 10px;
       
       label {

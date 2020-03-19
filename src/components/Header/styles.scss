@@ -1,13 +1,55 @@
 header {
   background-color: $blue;
-  padding: 20px 0;
   background-color: $soft-gray;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 
-  .img-container {
-    height: 50px;
-
-    img {
-      height: 100%
-    }
+  @include media-breakpoint-up(lg) {
+    position: static;
   }
+
+  nav {
+    height: $header-height;
+    display: flex;
+    align-items: center;
+
+    .img-container {
+      height: 40px;
+      display: inline-block;
+  
+      img {
+        height: 100%
+      }
+    }
+  
+    .filters-btn {
+      width: 80px;
+      height: 45px;
+      margin-left: auto;
+      color: white;
+      border: 1px solid white;
+      text-decoration: none;
+      z-index: 1;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include media-breakpoint-up(lg) {
+        display: none;
+      }
+
+      &.show {
+        width: 45px;
+        border-radius: 50%;
+        font-size: 28px;
+        line-height: 1.5;
+      }
+
+      &.hidden {
+        display: none;
+      }
+    }
+  }  
 }

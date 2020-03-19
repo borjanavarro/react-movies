@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { Slider, Rail, Handles, Tracks } from 'react-compound-slider'
 import { SliderRail, KeyboardHandle, Track } from './components' // example render components - source below
 
+import defaultValues from '../YearsSlider/constants';
+
 const sliderStyle = {
   position: 'relative',
   width: '100%',
 }
 
-const today = new Date();
-
-const domain = [today.getFullYear() - 100, today.getFullYear()]
+const domain = [defaultValues[0], defaultValues[1]]
 
 class RangeSlider extends Component {
   // state = {

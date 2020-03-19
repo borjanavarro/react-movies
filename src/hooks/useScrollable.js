@@ -5,17 +5,17 @@ import {matchPath} from 'react-router';
 const padding = 20;
 
 function useScrollable() {
-  const [styles, setStyles] = useState();
+  const [styles, setStyles] = useState({top: 0});
   const history = useHistory();
 
   const handleScroll = useCallback( () => {
-    const wrapper = document.querySelector('.filters-wrapper');
     const filters = document.querySelector('.filters');
-    const container = document.querySelector('.page-container');
+    const pageContainer = document.querySelector('.page-container');
+    const content = document.querySelector('.content');
 
-    const startPosition = wrapper.offsetParent.offsetTop - padding;
+    const startPosition = content.offsetParent.offsetTop - padding;
     const filtersHeight = filters.offsetHeight;
-    const limitPosition = startPosition + container.offsetHeight - 2 * padding;
+    const limitPosition = startPosition + pageContainer.offsetHeight - padding;
     
     if ( window.scrollY + filtersHeight < limitPosition) {
       if ( window.scrollY > startPosition ) {

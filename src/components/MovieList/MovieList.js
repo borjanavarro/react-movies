@@ -20,7 +20,6 @@ function MovieList() {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [totalPages, setTotalPages] = useState(1);
-  const [listHeight, setListHeight] = useState({});
 
   const getMoviesByName = useCallback( async (query, page) => {
     setLoading(true);
@@ -28,7 +27,6 @@ function MovieList() {
     setMovies(data.results);
     setTotalPages(data.total_pages);
     setTitle([query, 'movie names', data.total_results]);
-    getHeight(data.results);
     setLoading(false);
   }, []);
 
@@ -39,7 +37,6 @@ function MovieList() {
     data = filterResults(data);
     setMovies(data);
     setTotalPages(data.total_pages);
-    getHeight(data);
     setLoading(false);
   }, []);
 
@@ -49,7 +46,6 @@ function MovieList() {
     setMovies(data.results);
     setTotalPages(data.total_pages);
     setTitle(['discover', 'movie genres and years range', data.total_results]);
-    getHeight(data.results);
     setLoading(false);
   }, []);
 
@@ -58,8 +54,7 @@ function MovieList() {
     const data = await moviesApi.getPopularMovies(page);
     setMovies(data.results);
     setTotalPages(data.total_pages);
-    setTitle(['popular', 'all categories', data.total_results]);
-    getHeight(data.results);
+    setTitle(['popular', 'all genres', data.total_results]);
     setLoading(false);
   }, []);
 
@@ -76,11 +71,6 @@ function MovieList() {
       });
     });
     return movies;
-  }
-
-  const getHeight = (data) => {
-    let value = Math.ceil(data.length / 4) * 270;
-    setListHeight({minHeight:  value > 574 ? value : 574 + 'px' });
   }
 
   useEffect ( () => {
@@ -103,21 +93,20 @@ function MovieList() {
 
   if ( loading ) {
     return (
-      <Layout title={title} titleClass="">
-        <main className="movie-list" style={listHeight}>
+      <Layout title={[]} titleClass="hidden">
+        <main className="movie-list">
           <div className="no-results">
             <h2>Loading...</h2>
           </div>
         </main>
-        <Pagination />
       </Layout>
     )
   }
 
   if ( !movies || movies.length === 0 ) {
     return (
-      <Layout title={title} titleClass="">
-        <main className="movie-list" style={listHeight}>
+      <Layout title={[]} titleClass="hidden">
+        <main className="movie-list">
           <div className="no-results">
             <h2>No results</h2>
           </div>
@@ -128,7 +117,7 @@ function MovieList() {
 
   return (
     <Layout title={title} titleClass="">
-      <main className="movie-list" style={listHeight}>
+      <main className="movie-list">
           {movies.map( (movie) => {
             return <MovieListItem key={movie.id} movie={movie} />
           })}
