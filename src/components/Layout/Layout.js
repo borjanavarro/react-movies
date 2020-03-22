@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,19 +9,11 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Filters from '../Filters';
 
-const LG_WIDTH = 1199;
-
 function Layout({children, title, titleClass}) {
-  const [wrapperTop, setWrapperTop] = useState({top: 0});
-
-  useEffect (() => {
-    const content = document.querySelector('.content');
-    setWrapperTop({top: window.innerWidth < LG_WIDTH ? 0 : content.offsetParent.offsetTop});
-  }, [titleClass])
   
   return (
     <>
-    <Filters wrapperTop={wrapperTop} />
+    <Filters />
     <Header />
     <Container>
       <div className="page-container">

@@ -3,30 +3,42 @@ import {useHistory} from 'react-router-dom';
 import {matchPath} from 'react-router';
 
 const padding = 20;
+const LG_WIDTH = 1199;
 
 function useScrollable() {
   const [styles, setStyles] = useState({top: 0});
+  const [enable, setEnable] = useState(false);
   const history = useHistory();
 
   const handleScroll = useCallback( () => {
-    const filters = document.querySelector('.filters');
-    const pageContainer = document.querySelector('.page-container');
-    const content = document.querySelector('.content');
+    if ( enable ) {
+      const filters = document.querySelector('.filters');
+      const pageContainer = document.querySelector('.page-container');
+      const content = document.querySelector('.content');
 
-    const startPosition = content.offsetParent.offsetTop - padding;
-    const filtersHeight = filters.offsetHeight;
-    const limitPosition = startPosition + pageContainer.offsetHeight - padding;
-    
-    if ( window.scrollY + filtersHeight < limitPosition) {
-      if ( window.scrollY > startPosition ) {
-        setStyles({top: window.scrollY - startPosition})
+      const startPosition = content.offsetParent.offsetTop;
+      const filtersHeight = filters.offsetHeight;
+      const limitPosition = startPosition + pageContainer.offsetHeight - padding;
+      
+      if ( window.scrollY + filtersHeight + padding < limitPosition) {
+        if ( window.scrollY > startPosition - padding ) {
+          setStyles({top: padding + 'px', position: 'fixed' })
+        } else {
+          setStyles({top: startPosition, position: 'absolute'});
+        }
       } else {
-        setStyles({top: 0});
+        setStyles({top: limitPosition - filtersHeight, position: 'absolute'})
       }
-    } else {
-      setStyles({top: limitPosition - filtersHeight - startPosition})
     }
-  }, [])
+  }, [enable])
+
+  const handleResize = () => {
+    if ( window.innerWidth < LG_WIDTH ) {
+      setEnable(false);
+    } else {
+      setEnable(true);
+    }
+  }
 
   const onRouteChange = useCallback( (route) => {
     const match = matchPath(route.pathname, {
@@ -38,8 +50,15 @@ function useScrollable() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('resize', handleResize, true);
 
-    return window.removeEventListener('scroll', handleScroll);
+    handleResize();
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize)
+    }
   }, [handleScroll])
 
   useEffect (() => {

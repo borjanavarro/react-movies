@@ -7,7 +7,7 @@ import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
 import GenresCloud from '../GenresCloud';
 
-function Filters({wrapperTop}) {
+function Filters() {
   const [mounted, setMounted] = useState(false);
   const [resetChilds, setResetChilds] = useState(false);
   const [focused, setFocused] = useState('');
@@ -88,7 +88,7 @@ function Filters({wrapperTop}) {
   }
 
   return (
-    <div className="filters-wrapper" style={wrapperTop}>
+    <div className="filters-wrapper">
       <aside className="filters" style={styles}>
         <h5>Search by</h5>
         <form action="" onSubmit={handleSubmit}>
