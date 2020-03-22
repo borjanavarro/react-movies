@@ -2,7 +2,7 @@ import React, {useEffect, useCallback} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {matchPath} from 'react-router';
 
 import './styles.scss';
@@ -54,7 +54,7 @@ function Header() {
           <Col>
             <nav>
               <div className="img-container">
-                <img src={icon} alt=""/>
+                <Link to="/"><img src={icon} alt=""/></Link>
               </div>
               <button className="filters-btn" onClick={showFilters}>Filters</button>
             </nav>
