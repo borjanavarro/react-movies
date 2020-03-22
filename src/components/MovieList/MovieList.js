@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import './styles.scss';
+
 import moviesApi from '../../services/moviesApi';
 import Layout from '../Layout';
 import MovieListItem from '../MovieListItem';

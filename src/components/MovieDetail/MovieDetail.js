@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
+import './styles.scss';
+
 import Layout from '../Layout';
 import moviesApi from '../../services/moviesApi';
 

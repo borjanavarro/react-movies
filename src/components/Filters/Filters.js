@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import './styles.scss';
+
 import useScrollable from '../../hooks/useScrollable';
 import YearsSlider from '../YearsSlider';
 import GenresCloud from '../GenresCloud';
