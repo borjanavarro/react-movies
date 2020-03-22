@@ -36,9 +36,9 @@ function MovieList() {
     setLoading(true);
     let data = await moviesApi.getMoviesByCast(query, page);
     setTitle([query, 'movie cast', data.total_results]);
+    setTotalPages(data.total_pages);
     data = filterResults(data);
     setMovies(data);
-    setTotalPages(data.total_pages);
     setLoading(false);
   }, []);
 
