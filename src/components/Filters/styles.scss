@@ -1,3 +1,8 @@
+@import '../../scss/variables.scss';
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~bootstrap/scss/mixins';
+
 $genre-hover-color: rgba($blue, 0.3);
 $filters-min-height: 574px;
 
@@ -17,7 +22,6 @@ $filters-min-height: 574px;
     height: 100%;
     width: 1140px;
     margin: 0 auto;
-    padding: 0 15px;
     justify-content: flex-start;
     position: relative;
   }
@@ -50,7 +54,7 @@ $filters-min-height: 574px;
     @include media-breakpoint-up(lg) {
       border: 1px solid $border-color;
       margin-top: 0;
-      width: 30%;
+      width: 350px;
       position: absolute;
     }
 

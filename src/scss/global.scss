@@ -1,16 +1,13 @@
-$blue: rgb(91, 113, 124);
-$dark-blue: rgb(55, 77, 91);
-$soft-gray: rgb(222, 222, 222);
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin-ext');
+@import '~bootstrap/scss/bootstrap.scss';
 
-$header-height: 60px;
-$footer-height: 60px;
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
 
-$page-container-mt: 40px;
-$page-container-mb: 120px;
-
-@function getMovieItemWidth($height) {
-  @return 500 / 750 * $height;
-}
+@import './variables.scss';
 
 * {
   color: $dark-blue;
@@ -32,12 +29,16 @@ button {
   }
 }
 
-.no-results {
+.empty-page {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mt} - #{$page-container-mb});
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb});
+
+  @include media-breakpoint-up(lg) {
+    min-height: 574px;
+  }
 
   h2 {
     margin-top: $page-container-mb;

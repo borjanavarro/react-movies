@@ -1,7 +1,11 @@
 import React, {useEffect, useCallback} from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import {useHistory} from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import {useHistory, Link} from 'react-router-dom';
 import {matchPath} from 'react-router';
+
+import './styles.scss';
 
 import icon from '../../img/icon.svg';
 
@@ -14,12 +18,10 @@ function Header() {
 
     e.target.classList.toggle('show');
     filters.classList.toggle('show');
-    // filters.style.top = (window.scrollY) + 'px';
     pageContainer.classList.toggle('stop-scrolling');
     
     if ( e.target.classList.contains('show') ) {
       e.target.innerHTML = 'X';
-
     } else {
       e.target.innerHTML = 'Filters';
     }
@@ -50,7 +52,7 @@ function Header() {
           <Col>
             <nav>
               <div className="img-container">
-                <img src={icon} alt=""/>
+                <Link to="/"><img src={icon} alt=""/></Link>
               </div>
               <button className="filters-btn" onClick={showFilters}>Filters</button>
             </nav>

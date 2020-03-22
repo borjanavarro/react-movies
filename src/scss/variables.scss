@@ -1,0 +1,13 @@
+$blue: rgb(91, 113, 124);
+$dark-blue: rgb(55, 77, 91);
+$soft-gray: rgb(222, 222, 222);
+
+$header-height: 60px;
+$footer-height: 60px;
+
+$page-container-mt: 40px;
+$page-container-mb: 120px;
+
+@function getMovieItemWidth($height) {
+  @return 500 / 750 * $height;
+}

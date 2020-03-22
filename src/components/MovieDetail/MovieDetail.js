@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+
+import './styles.scss';
 
 import Layout from '../Layout';
 import moviesApi from '../../services/moviesApi';
@@ -10,9 +12,10 @@ const POSTER_URL = 'https://image.tmdb.org/t/p/' + mode + '/';
 function MovieDetail() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
-  const img = useRef();
+  const [loading, setLoading] = useState(true);
 
   const getMovie = useCallback( async () => {
+    setLoading(true);
     const details = moviesApi.findDetailsByMovieId(movieId);
     const reviews = moviesApi.findReviewsByMovieId(movieId);
     const credits = moviesApi.findCreditsByMovieId(movieId);
@@ -24,6 +27,7 @@ function MovieDetail() {
       movie.cast = credits ? credits.cast : null;
       movie.crew = credits ? credits.crew : null;
       setMovie(movie);
+      setLoading(false);
     });
   }, [movieId]);
 
@@ -43,26 +47,34 @@ function MovieDetail() {
             .join(', ');
   }
 
-  const getImage = (e, i) => {
+  const getUserImage = (e, i) => {
     setTimeout(() => {
       e.target.src = "https://thispersondoesnotexist.com/image?hola=" + Math.floor(Math.random() * 100000);
     }, 1500 * (i + 1) * 1.5, e.persist());
   }
 
+  if ( loading ) {
+    return (
+      <Layout title={[]} titleClass={'detail hidden'}>
+        <div className="empty-page">
+          <h2>Loading...</h2>
+        </div>
+      </Layout>
+    );
+  }
+
   if ( !movie ) {
     return (
-      <Layout title={[]} titleClass={'hidden-detail'}>
-        <div className="movie-detail">
-          <div className="no-results">
-            <h2>No results</h2>
-          </div>
+      <Layout title={[]} titleClass={'detail hidden'}>
+        <div className="empty-page">
+          <h2>No results</h2>
         </div>
       </Layout>
     );
   }
   
   return (
-    <Layout title={[]} titleClass={'hidden-detail'}>
+    <Layout title={[]} titleClass={'detail'}>
       <div className="movie-detail">
         <img src={movie.details.poster_path ? POSTER_URL + movie.details.poster_path : ''} alt="Movie Poster" />
         <div className="title">
@@ -85,7 +97,7 @@ function MovieDetail() {
           {movie.reviews.map( (review, i) => {
             return <div className="review-item" key={i}>
               <div className="author">
-                <img src="example" onError={(e) => getImage(e, i)} alt="" />
+                <img src="example" onError={(e) => getUserImage(e, i)} alt="" />
                 <h6>{review.author}</h6>
               </div>
               <p>{review.content}</p>

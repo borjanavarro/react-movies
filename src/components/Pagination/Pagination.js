@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 
+import './styles.scss';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

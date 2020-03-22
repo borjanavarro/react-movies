@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './styles.scss';
+
 const mode = 'w500'
 const POSTER_URL = 'https://image.tmdb.org/t/p/' + mode + '/';
 

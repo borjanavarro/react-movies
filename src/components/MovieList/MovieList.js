@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import './styles.scss';
+
 import moviesApi from '../../services/moviesApi';
 import Layout from '../Layout';
 import MovieListItem from '../MovieListItem';
@@ -34,9 +36,9 @@ function MovieList() {
     setLoading(true);
     let data = await moviesApi.getMoviesByCast(query, page);
     setTitle([query, 'movie cast', data.total_results]);
+    setTotalPages(data.total_pages);
     data = filterResults(data);
     setMovies(data);
-    setTotalPages(data.total_pages);
     setLoading(false);
   }, []);
 
@@ -93,30 +95,26 @@ function MovieList() {
 
   if ( loading ) {
     return (
-      <Layout title={[]} titleClass="hidden">
-        <main className="movie-list">
-          <div className="no-results">
-            <h2>Loading...</h2>
-          </div>
-        </main>
+      <Layout title={[]} titleClass="list hidden">
+        <div className="empty-page">
+          <h2>Loading...</h2>
+        </div>
       </Layout>
     )
   }
 
   if ( !movies || movies.length === 0 ) {
     return (
-      <Layout title={[]} titleClass="hidden">
-        <main className="movie-list">
-          <div className="no-results">
-            <h2>No results</h2>
-          </div>
-        </main>
+      <Layout title={[]} titleClass="list hidden">
+        <div className="empty-page">
+          <h2>No results</h2>
+        </div>
       </Layout>
     )
   }
 
   return (
-    <Layout title={title} titleClass="">
+    <Layout title={title} titleClass="list">
       <main className="movie-list">
           {movies.map( (movie) => {
             return <MovieListItem key={movie.id} movie={movie} />
