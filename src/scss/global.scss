@@ -29,12 +29,16 @@ button {
   }
 }
 
-.no-results {
+.empty-page {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mt} - #{$page-container-mb});
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb});
+
+  @include media-breakpoint-up(lg) {
+    min-height: 574px;
+  }
 
   h2 {
     margin-top: $page-container-mb;

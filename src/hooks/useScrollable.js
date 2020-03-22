@@ -46,7 +46,8 @@ function useScrollable() {
       exact: true
     });
     if ( match ) window.scroll(0, 0);
-  }, [])
+    handleScroll();
+  }, [handleScroll])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, true);

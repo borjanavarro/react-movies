@@ -14,26 +14,30 @@
   > .title {
     margin: 30px 0;
 
-    &.hidden-detail {
+    &.detail {
       height: 60px;
       margin: 0;
       visibility: hidden;
       overflow: hidden;
+
+      @include media-breakpoint-down(lg) {
+        &.hidden {
+          height: 0;
+          margin: 0;
+        }
+      }
     }
 
-    &.hidden {
-      // no space in mobile
-      height: 0;
-      margin: 0;
-      visibility: hidden;
-      overflow: hidden;
-
-      // preserve space in desktop
-      @include media-breakpoint-up(lg) {
-        height: auto;
-        margin: 30px 0;
+    &.list {
+      &.hidden {
         visibility: hidden;
-        overflow: visible;
+        
+        @include media-breakpoint-down(lg) {
+          height: 0;
+          margin: 0;
+          visibility: hidden;
+          overflow: hidden;
+        }
       }
     }
     

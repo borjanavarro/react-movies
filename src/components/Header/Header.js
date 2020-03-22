@@ -18,12 +18,10 @@ function Header() {
 
     e.target.classList.toggle('show');
     filters.classList.toggle('show');
-    // filters.style.top = (window.scrollY) + 'px';
     pageContainer.classList.toggle('stop-scrolling');
     
     if ( e.target.classList.contains('show') ) {
       e.target.innerHTML = 'X';
-
     } else {
       e.target.innerHTML = 'Filters';
     }
