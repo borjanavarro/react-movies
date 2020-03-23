@@ -11,7 +11,7 @@ function Filters() {
   const [mounted, setMounted] = useState(false);
   const [resetChilds, setResetChilds] = useState(false);
   const [focused, setFocused] = useState('');
-  const styles = useScrollable(mounted);
+  const {topPosition, display} = useScrollable(mounted);
   const [movieInput, setMovieInput] = useState('');
   const [castInput, setCastInput] = useState('');
   const params = new URLSearchParams(useLocation().search);
@@ -88,8 +88,8 @@ function Filters() {
   }
 
   return (
-    <div className="filters-wrapper">
-      <aside className="filters" style={styles}>
+    <div className="filters-wrapper" style={ !display ? {display: 'none'} : {}}>
+      <aside className="filters" style={topPosition}>
         <h5>Search by</h5>
         <form action="" onSubmit={handleSubmit}>
           <input type="text" placeholder="Movie ..." value={movieInput} onChange={movieChange} />
