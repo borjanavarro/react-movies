@@ -20,11 +20,15 @@ $filters-min-height: 574px;
   @include media-breakpoint-up(lg) {
     visibility: visible;
     height: 100%;
-    width: 1140px;
+    width: 960px;
     margin: 0 auto;
     padding: 0 15px;
     justify-content: flex-start;
     position: relative;
+  }
+
+  @include media-breakpoint-up(xl) {
+    width: 1140px;
   }
 
   @media (max-height: $filters-min-height) {
@@ -55,8 +59,12 @@ $filters-min-height: 574px;
     @include media-breakpoint-up(lg) {
       border: 1px solid $border-color;
       margin-top: 0;
-      width: 350px;
+      width: 296px;
       position: absolute;
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 350px;
     }
 
     @media (max-height: $filters-min-height) {
