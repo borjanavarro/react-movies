@@ -8,10 +8,10 @@ $title-margin: 30px;
 .page-container {
   margin-bottom: $page-container-mb;
   padding-top: $header-height;
+  min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb} - #{$title-margin});
 
   @include media-breakpoint-up(lg) {
     padding-top: 0;
-    min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$page-container-mb} - #{$title-margin});
   }
 
   > .title {
